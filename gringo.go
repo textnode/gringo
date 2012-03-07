@@ -43,16 +43,16 @@ import "runtime"
 
 // Example item which we will be writing to and reading from the queue
 type Payload struct {
-	value uint64
+    value uint64
     instrument uint64
     price uint64
     quantity uint32
-	side bool
+    side bool
     freetext [64]byte
 }
 
 func NewPayload(value uint64) *Payload {
-	return &Payload{value : value}
+    return &Payload{value : value}
 }
 
 func (self *Payload) Value () uint64 {
@@ -64,38 +64,38 @@ const queueSize uint64 = 4096
 const indexMask uint64 = queueSize - 1
 
 type Gringo struct {
-	padding1 [8]uint64
+    padding1 [8]uint64
     lastCommittedIndex uint64
-	padding2 [8]uint64
-	nextFreeIndex uint64
-	padding3 [8]uint64
+    padding2 [8]uint64
+    nextFreeIndex uint64
+    padding3 [8]uint64
     readerIndex uint64
-	padding4 [8]uint64
+    padding4 [8]uint64
     contents [queueSize]Payload
-	padding5 [8]uint64
+    padding5 [8]uint64
 }
 
 func NewGringo() *Gringo {
-	return &Gringo{lastCommittedIndex : 0, nextFreeIndex : 1, readerIndex : 1}
+    return &Gringo{lastCommittedIndex : 0, nextFreeIndex : 1, readerIndex : 1}
 }
 
 func (self *Gringo) Write(value Payload) {
-	var myIndex = atomic.AddUint64(&self.nextFreeIndex, 1) - 1
-	//Wait for reader to catch up, so we don't clobber a slot which it is (or will be) reading
+    var myIndex = atomic.AddUint64(&self.nextFreeIndex, 1) - 1
+    //Wait for reader to catch up, so we don't clobber a slot which it is (or will be) reading
     for myIndex > (self.readerIndex + queueSize - 2) {
         runtime.Gosched()
     }
-	//Write the item into it's slot
+    //Write the item into it's slot
     self.contents[myIndex & indexMask] = value
-	//Increment the lastCommittedIndex so the item is available for reading
-	for !atomic.CompareAndSwapUint64(&self.lastCommittedIndex, myIndex - 1, myIndex) {
+    //Increment the lastCommittedIndex so the item is available for reading
+    for !atomic.CompareAndSwapUint64(&self.lastCommittedIndex, myIndex - 1, myIndex) {
         runtime.Gosched()
-	}
+    }
 }
 
 func (self *Gringo) Read() Payload {
     var myIndex = atomic.AddUint64(&self.readerIndex, 1) - 1
-	//If reader has out-run writer, wait for a value to be committed
+    //If reader has out-run writer, wait for a value to be committed
     for myIndex > self.lastCommittedIndex {
         runtime.Gosched()
     }
