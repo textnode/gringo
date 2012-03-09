@@ -18,6 +18,9 @@
 // Inspired by a talk by @mjpt777 at @devbash titled "Lessons in Clean Fast Code" which, 
 // among other things, described the LMAX Disruptor.
 //
+// N.B. To see the performance benefits of gringo versus Go's channels, you must have multiple goroutines
+// and GOMAXPROCS > 1.
+
 // Known Limitations:
 //
 // *) At most (2^64)-1 items can be written to the queue.
