@@ -30,13 +30,6 @@
 //
 // *) If you have enough cores you can change from runtime.Gosched() to a busy loop.
 // *) If you don't need copy-on-write/read semantics change gringo to store pointers.
-//
-// Warning:
-//
-// During testing across multiple cores and multiple goroutines the algorithm unexpectedly
-// performed correctly WITHOUT the use of additional memory barriers (x86: lfence, mfence, sfence).
-//
-// If you choose to use this algorithm, test it extensively in your real deployment configurations!
 // 
 
 package gringo
