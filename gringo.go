@@ -27,7 +27,7 @@
 //
 // *) If you have enough cores you can change from runtime.Gosched() to a busy loop.
 // *) If you don't need copy-on-write semantics change Write to take a pointer.
-// *) If you don't need copy-on-read semantics change Read return a pointer.
+// *) If you don't need copy-on-read semantics change Read to return a pointer.
 //
 // Warning:
 //
