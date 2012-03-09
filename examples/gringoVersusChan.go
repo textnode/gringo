@@ -101,8 +101,8 @@ func chanConsumer(inChan chan gringo.Payload, done chan int) {
 func chanRunner() {
     doneChan := make(chan int)
 
-    r1 := make(chan gringo.Payload, 256)
-    r2 := make(chan gringo.Payload, 256)
+    r1 := make(chan gringo.Payload, 4096)
+    r2 := make(chan gringo.Payload, 4096)
 
     var startTime time.Time = time.Now()
 
