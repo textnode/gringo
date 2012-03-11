@@ -29,7 +29,6 @@
 // Suggestions:
 //
 // *) If you have enough cores you can change from runtime.Gosched() to a busy loop.
-// *) If you don't need copy-on-write/read semantics change gringo to store pointers.
 // 
 
 package gringo
