@@ -23,7 +23,7 @@
 
 // Known Limitations:
 //
-// *) At most (2^64)-1 items can be written to the queue.
+// *) At most (2^64)-2 items can be written to the queue.
 // *) The size of the queue must be a power of 2.
 // 
 // Suggestions:
