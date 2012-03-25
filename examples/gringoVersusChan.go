@@ -66,7 +66,7 @@ func gringoRunner() {
 
     <-doneChan; <-doneChan; <-doneChan
 
-    fmt.Println("gringoRunner Nanoseconds passed:", time.Since(startTime))
+    fmt.Println("gringoRunner seconds passed:", time.Since(startTime))
 }
 
 
@@ -112,7 +112,7 @@ func chanRunner() {
 
     <-doneChan; <-doneChan; <-doneChan
 
-    fmt.Println("chanRunner Nanoseconds passed:", time.Since(startTime))
+    fmt.Println("chanRunner seconds passed:", time.Since(startTime))
 }
 
 func main() {
