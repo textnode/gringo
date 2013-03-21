@@ -17,7 +17,7 @@ package main
 import (
     "time"
     "fmt"
-    "gringo"
+    "github.com/textnode/gringo"
 )
 
 var size uint64 = 5000000
