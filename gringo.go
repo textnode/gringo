@@ -60,6 +60,8 @@ const queueSize uint64 = 4096
 const indexMask uint64 = queueSize - 1
 
 type Gringo struct {
+    // The padding members 1 to 5 below are here to ensure each item is on a separate cache line.
+    // This prevents false sharing and hence improves performance.
     padding1 [8]uint64
     lastCommittedIndex uint64
     padding2 [8]uint64
