@@ -57,6 +57,8 @@ func (self *Payload) Value () uint64 {
 
 // The queue
 const queueSize uint64 = 4096
+
+// Masking is faster than division
 const indexMask uint64 = queueSize - 1
 
 type Gringo struct {
